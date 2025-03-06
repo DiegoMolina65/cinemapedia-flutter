@@ -15,8 +15,8 @@ final slides = <SlideInfo>[
       'Cinemapedia', 'La mejor App para peliculas.', 'assets/slideinfo/1.png'),
   SlideInfo('Peliculas', 'Todas las peliculas disponibles en la app.',
       'assets/slideinfo/2.png'),
-  SlideInfo('Disfruta la comida', 'Los mejores combos disponibles.',
-      'assets/slideinfo/3.png'),
+  SlideInfo(
+      'Disfruta la comida', 'Ve por la comida.', 'assets/slideinfo/3.png'),
 ];
 
 class AppTutorialScreen extends StatefulWidget {
@@ -112,13 +112,10 @@ class _Slide extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               title,
-              style: titleStyle,
+              style: titleStyle!.copyWith(color: Colors.black),
             ),
             const SizedBox(height: 10),
-            Text(
-              caption,
-              style: captionStyle,
-            ),
+            Text(caption, style: captionStyle!.copyWith(color: Colors.black)),
           ],
         ),
       ),

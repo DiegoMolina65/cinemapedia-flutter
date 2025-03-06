@@ -1,24 +1,19 @@
 import 'package:go_router/go_router.dart';
 
 import 'package:cinemapedia/presentation/screens/screens.dart';
-import 'package:cinemapedia/presentation/screens/tutorial/app_tutorial_screen.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/tutorial', // Redirige a /tutorial inicialmente
+  initialLocation: '/login',
   routes: [
-    // Ruta para el tutorial
     GoRoute(
+      name: AppTutorialScreen.name,
       path: '/tutorial',
-      name: AppTutorialScreen.name, // Nombre de la pantalla de tutorial
       builder: (context, state) {
-        return const AppTutorialScreen(); // Pantalla de tutorial
+        return const AppTutorialScreen();
       },
-      // Una vez que se complete el tutorial, se redirige a la pantalla principal
     ),
-
-    // Ruta para la pantalla principal HomeScreen
     GoRoute(
-      path: '/home/:page', // Asegúrate de que el path sea correcto
+      path: '/home/:page',
       name: HomeScreen.name,
       builder: (context, state) {
         final pageIndex = int.parse(state.params['page'] ?? '0');
@@ -35,12 +30,23 @@ final appRouter = GoRouter(
         ),
       ],
     ),
-
-    // Ruta de redirección por defecto (si el usuario accede sin ruta específica)
+    GoRoute(
+      name: RegisterScreen.name,
+      path: '/register',
+      builder: (context, state) {
+        return const RegisterScreen();
+      },
+    ),
+    GoRoute(
+      path: '/login',
+      name: LoginScreen.name,
+      builder: (context, state) {
+        return LoginScreen();
+      },
+    ),
     GoRoute(
       path: '/',
-      redirect: (context, state) =>
-          '/tutorial', // Si el usuario accede sin ruta, redirige al tutorial
+      redirect: (context, state) => '/tutorial',
     ),
   ],
 );
