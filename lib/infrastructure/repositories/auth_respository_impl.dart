@@ -23,7 +23,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<User?> signUpWithEmailPassword(String email, String password) {
-    return _authDatasource.signUpWithEmailPassword(email, password);
+  Future<User?> signUpWithEmailPassword(String email, String password, String name, String gender) {
+    return _authDatasource.signUpWithEmailPassword(email, password, name, gender);
   }
 }

@@ -15,44 +15,46 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [
-        const HeaderPainter(),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Bienvenido",
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "Inicia sesión para continuar",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    _LoginInputs(
-                      emailController: emailController,
-                      passwordController: passwordController,
-                    ),
-                    const SizedBox(height: 20),
-                    _LoginFinalScreen(
-                      emailController: emailController,
-                      passwordController: passwordController,
-                    ),
-                  ],
+    return SafeArea(
+      child: Scaffold(
+        body: Column(children: [
+          const HeaderPainter(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Bienvenido",
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        "Inicia sesión para continuar",
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                      _LoginInputs(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                      ),
+                      const SizedBox(height: 20),
+                      _LoginFinalScreen(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }

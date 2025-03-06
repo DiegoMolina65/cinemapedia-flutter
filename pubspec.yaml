@@ -9,6 +9,7 @@ environment:
 dependencies:
   animate_do: ^3.0.2
   card_swiper: ^2.0.4
+  cloud_firestore: ^4.14.0
   dio: ^5.0.0
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
@@ -40,3 +41,4 @@ flutter:
     - assets/loaders/
     - assets/slideinfo/
     - assets/logo/
+    - assets/profile/

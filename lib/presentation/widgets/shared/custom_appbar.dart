@@ -54,7 +54,12 @@ class CustomAppbar extends ConsumerWidget {
                     },
                     icon: Icon(isDarkMode
                         ? Icons.dark_mode_outlined
-                        : Icons.light_mode_outlined))
+                        : Icons.light_mode_outlined)),
+                IconButton(
+                    onPressed: () {
+                      context.push('/profile');
+                    },
+                    icon: const Icon(Icons.account_circle))
               ],
             ),
           ),

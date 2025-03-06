@@ -12,48 +12,55 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Crear los controladores aquí para que sean compartidos
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
+    final nameController = TextEditingController();
+    final genderController = TextEditingController();
 
-    return Scaffold(
-      body: Column(children: [
-        const HeaderPainter(),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Crear Cuenta",
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "Regístrate para continuar",
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    _RegisterInputs(
-                      emailController: emailController,
-                      passwordController: passwordController,
-                    ),
-                    const SizedBox(height: 20),
-                    _RegisterFinalScreen(
-                      emailController: emailController,
-                      passwordController: passwordController,
-                    ),
-                  ],
+    return SafeArea(
+      child: Scaffold(
+        body: Column(children: [
+          const HeaderPainter(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Crear Cuenta",
+                        style: TextStyle(
+                            fontSize: 28, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        "Regístrate para continuar",
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                      _RegisterInputs(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        nameController: nameController,
+                        genderController: genderController,
+                      ),
+                      const SizedBox(height: 20),
+                      _RegisterFinalScreen(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        nameController: nameController,
+                        genderController: genderController,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }
@@ -61,10 +68,14 @@ class RegisterScreen extends StatelessWidget {
 class _RegisterInputs extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController nameController;
+  final TextEditingController genderController;
 
   const _RegisterInputs({
     required this.emailController,
     required this.passwordController,
+    required this.nameController,
+    required this.genderController,
   });
 
   @override
@@ -90,6 +101,42 @@ class _RegisterInputs extends StatelessWidget {
             prefixIcon: Icon(Icons.lock),
           ),
         ),
+        const SizedBox(height: 20),
+        TextField(
+          controller: nameController,
+          decoration: const InputDecoration(
+            labelText: "Nombre",
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.person),
+          ),
+        ),
+        const SizedBox(height: 20),
+        DropdownButtonFormField<String>(
+          value: genderController.text.isEmpty ? null : genderController.text,
+          decoration: const InputDecoration(
+            labelText: "Género",
+            border: OutlineInputBorder(),
+            prefixIcon: Icon(Icons.wc),
+          ),
+          items: const [
+            DropdownMenuItem(
+              value: "Masculino",
+              child: Text("Masculino"),
+            ),
+            DropdownMenuItem(
+              value: "Femenino",
+              child: Text("Femenino"),
+            ),
+            DropdownMenuItem(
+              value: "Otros",
+              child: Text("Otros"),
+            ),
+          ],
+          onChanged: (value) {
+            genderController.text = value ?? "";
+          },
+          isExpanded: true,
+        ),
       ],
     );
   }
@@ -98,10 +145,14 @@ class _RegisterInputs extends StatelessWidget {
 class _RegisterFinalScreen extends ConsumerWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController nameController;
+  final TextEditingController genderController;
 
   const _RegisterFinalScreen({
     required this.emailController,
     required this.passwordController,
+    required this.nameController,
+    required this.genderController,
   });
 
   @override
@@ -114,8 +165,13 @@ class _RegisterFinalScreen extends ConsumerWidget {
             onPressed: () async {
               final String email = emailController.text.trim();
               final String password = passwordController.text.trim();
+              final String name = nameController.text.trim();
+              final String gender = genderController.text.trim();
 
-              if (email.isEmpty || password.isEmpty) {
+              if (email.isEmpty ||
+                  password.isEmpty ||
+                  name.isEmpty ||
+                  gender.isEmpty) {
                 SnackBarHelper.showSnackBar(
                     context, "Por favor, completa todos los campos");
                 return;
@@ -124,9 +180,13 @@ class _RegisterFinalScreen extends ConsumerWidget {
               // Obtener el AuthRepository del provider
               final authRepository = ref.read(authRepositoryProvider);
 
-              // Crear la cuenta
-              final user =
-                  await authRepository.signUpWithEmailPassword(email, password);
+              // Crear la cuenta con los datos adicionales
+              final user = await authRepository.signUpWithEmailPassword(
+                email,
+                password,
+                name,
+                gender,
+              );
 
               if (user != null) {
                 SnackBarHelper.showSnackBar(

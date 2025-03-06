@@ -6,7 +6,7 @@ class SnackBarHelper {
   static void showSnackBar(
     BuildContext context,
     String message, {
-    Duration cooldown = const Duration(seconds: 2), 
+    Duration cooldown = const Duration(seconds: 2),
   }) {
     if (!_isSnackBarShown) {
       _isSnackBarShown = true;

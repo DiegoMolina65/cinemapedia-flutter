@@ -45,6 +45,13 @@ final appRouter = GoRouter(
       },
     ),
     GoRoute(
+      name: ProfileScreen.name,
+      path: '/profile',
+      builder: (context, state) {
+        return const ProfileScreen();
+      },
+    ),
+    GoRoute(
       path: '/',
       redirect: (context, state) => '/tutorial',
     ),
